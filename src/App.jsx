@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import useArtworkStore from "./store/artworkStore";
-import "./App.css";
+
 import ArtworkForm from "./components/ui/ArtworkForm";
+import Navbar from "./components/ui/Navbar";
+import InputForm from "./components/ui/InputForm";
 
 // Things to think about later: only alloiwng certain file types.
 // Only allowing a certain amount of image size per user
+
+// CHECK OUT: https://ui.shadcn.com/docs/components/form
 
 function App() {
   const user = useUser();
@@ -67,7 +71,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="bg-gradient-to-r from-[#8E2DE2] to-[#4A00E0] min-h-screen">
       {user === null ? (
         <>
           <input
@@ -82,13 +86,12 @@ function App() {
         </>
       ) : (
         <>
+          <Navbar signOut={() => signOut()} />
           <h1>You are signed in!</h1>
           <p>Current user: {user.email}</p>
-          <button className="btn btn-outline" onClick={() => signOut()}>
-            Sign Out
-          </button>
 
-          <ArtworkForm user={user} />
+          {/* <ArtworkForm user={user} /> */}
+          <InputForm />
           <div className="form-control w-full max-w-xs">
             {artworks.map((artwork) => {
               return (
