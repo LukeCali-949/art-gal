@@ -77,6 +77,7 @@ function App() {
           <input
             type="text"
             placeholder="Type here"
+            autoComplete="email"
             className="input input-bordered input-primary w-full max-w-xs"
             onChange={(e) => setEmail(e.target.value)}
           />

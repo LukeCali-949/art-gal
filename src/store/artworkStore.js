@@ -7,8 +7,9 @@ const useArtworkStore = create((set) => ({
   form: {
     artistName: "",
     artworkName: "",
-    dateOfArtwork: "",
+    dateOfArtwork: 0,
     artisticMovement: "",
+    countryOfOrigin: "",
     image: null,
   },
   setForm: (form) => set({ form }),
