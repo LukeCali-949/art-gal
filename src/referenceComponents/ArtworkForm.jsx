@@ -1,8 +1,8 @@
 //import {useState} from 'react'
-import useArtworkStore from "../../store/artworkStore";
+import useArtworkStore from "../store/artworkStore";
 //import { v4 as uuidv4 } from "uuid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { uploadImage } from "../../supabase/supabaseFunctions";
+import { uploadImage } from "../supabase/supabaseFunctions";
 // eslint-disable-next-line react/prop-types
 const ArtworkForm = ({ user }) => {
   const supabase = useSupabaseClient();

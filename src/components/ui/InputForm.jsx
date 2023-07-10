@@ -2,14 +2,21 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { uploadImage } from "../../supabase/supabaseFunctions";
 import useArtworkStore from "../../store/artworkStore";
+import { useState } from "react";
 
 // FOR NEXT TIME:
-// FOR SOME REASON THE IMAGE IS NOT BEING UPDATED IN THE FORM STATE
-// WORKING ON UPLOADING THE DATA INTO THE DATABASE
+
+// CURRENT PROBELMS/BUGS:
+// FOR SOME REASON EVEN AFTER UPLOADING TO THE DATABASE AND SETTING THE IMAGE
+// PROPERTY ON THE FROM STATE TO NULL, THE IMAGE WON'T UPDATE. NICHE ISSUE SINCE
+// ITS IMPROBABLE THAT A USER WILL UPLOAD THE SAME IMAGE TWICE, BUT AN ERROR NONETHELESS
 
 // eslint-disable-next-line react/prop-types
 export default function InputForm({ user }) {
   const supabase = useSupabaseClient();
+
+  // FOR THE DROP FILE INPUT
+  const [isDragActive, setIsDragActive] = useState(false);
 
   const { form, setForm, addArtwork, updateImageUrl } = useArtworkStore(
     (state) => ({
@@ -28,22 +35,33 @@ export default function InputForm({ user }) {
     });
   }
 
+  function handleCancel() {
+    setForm({
+      artistName: "",
+      artworkName: "",
+      dateOfArtwork: "",
+      artisticMovement: "",
+      countryOfOrigin: "",
+      image: null,
+    });
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("hello");
+    console.log(user);
     const imageLink = await uploadImage(user, form.image, supabase);
     updateImageUrl(imageLink);
 
-    const { data, error } = await supabase
-      .from("artworks")
-      .insert([
-        { artist_name: form.artistName },
-        { artwork_name: form.artworkName },
-        { date_of_artwork: form.dateOfArtwork },
-        { artistic_movement: form.artisticMovement },
-        { country_of_origin: form.countryOfOrigin },
-        { image_url: imageLink },
-      ]);
+    const { data, error } = await supabase.from("artworks").insert([
+      {
+        artist_name: form.artistName,
+        artwork_name: form.artworkName,
+        date_of_artwork: form.dateOfArtwork,
+        artistic_movement: form.artisticMovement,
+        country_of_origin: form.countryOfOrigin,
+        image_url: imageLink,
+      },
+    ]);
 
     if (error) {
       console.error("Error inserting artwork: ", error);
@@ -72,10 +90,20 @@ export default function InputForm({ user }) {
     });
   }
 
-  function handleImageChange(e) {
+  function handleImageChange(fileOrEvent) {
+    let file;
+
+    // Check if the argument is a File (from the drop event)
+    // or an event (from the input change event)
+    if (fileOrEvent instanceof File) {
+      file = fileOrEvent;
+    } else {
+      file = fileOrEvent.target.files[0];
+    }
+
     setForm({
       ...form,
-      image: e.target.files[0],
+      image: file,
     });
   }
 
@@ -88,7 +116,7 @@ export default function InputForm({ user }) {
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Please provide all the following information regarding the uploaded
-            piece.
+            work.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -199,10 +227,23 @@ export default function InputForm({ user }) {
               <p className="text-xs font-small leading-6 pb-1">{`Current Image: ${
                 form.image ? form.image.name : "None"
               }`}</p>
-              <div className="flex items-center justify-center w-full">
+              <div
+                className="flex items-center justify-center w-full"
+                onDragOver={(e) => {
+                  e.preventDefault();
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  handleImageChange(e.dataTransfer.files[0]);
+                }}
+                onDragEnter={() => setIsDragActive(true)}
+                onDragLeave={() => setIsDragActive(false)}
+              >
                 <label
                   htmlFor="dropzone-file"
-                  className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                  className={`flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer ${
+                    isDragActive ? "bg-gray-100" : "bg-gray-50"
+                  } dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`}
                 >
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <svg
@@ -245,6 +286,7 @@ export default function InputForm({ user }) {
           <button
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
+            onClick={handleCancel}
           >
             Cancel
           </button>
@@ -252,7 +294,7 @@ export default function InputForm({ user }) {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Sumbit
+            Submit
           </button>
         </div>
       </div>

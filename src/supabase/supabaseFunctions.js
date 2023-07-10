@@ -4,14 +4,15 @@ const CDNURL =
   "https://snmvdalbzhcxwrlcsaqv.supabase.co/storage/v1/object/public/images/";
 
 export async function uploadImage(user, file, supabase) {
-  const imageUrl = user.id + "/" + uuidv4();
+  const uniqueID = uuidv4();
+  const imageUrl = user.id + "/" + uniqueID;
 
   const { data, error } = await supabase.storage
     .from("images")
     .upload(imageUrl, file);
 
   if (data) {
-    return `${CDNURL}${user.id}/${data.Key}`;
+    return `${CDNURL}${user.id}/${uniqueID}`;
   } else {
     console.error(error);
     return null;

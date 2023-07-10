@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import useArtworkStore from "./store/artworkStore";
 
-import ArtworkForm from "./components/ui/ArtworkForm";
 import Navbar from "./components/ui/Navbar";
 import InputForm from "./components/ui/InputForm";
 
 // Things to think about later: only alloiwng certain file types.
-// Only allowing a certain amount of image size per user
+// Only allowing a certain amount of image bytes per user
 
 // CHECK OUT: https://ui.shadcn.com/docs/components/form
 
@@ -91,8 +90,7 @@ function App() {
           <h1>You are signed in!</h1>
           <p>Current user: {user.email}</p>
 
-          {/* <ArtworkForm user={user} /> */}
-          <InputForm />
+          <InputForm user={user} />
           <div className="form-control w-full max-w-xs">
             {artworks.map((artwork) => {
               return (
