@@ -1,0 +1,8 @@
+FUTURE IDEAs:
+
+<USERNAME>'s Gallery
+
+Picture generator from an api, where the user will have the option
+to add to their gallery, and then the site will handle the upload to the database
+
+INTEGRATE GPT API INTO CODE SOMEHOW

@@ -130,8 +130,8 @@ export default function InputForm({ user }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  value={form.artworkName}
                   name="artworkName"
+                  value={form.artworkName}
                   onChange={handleInputChange}
                   id="artwork-name"
                   //autoComplete="given-name"

@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ signOut }) => {
   return (
-    <div className="navbar bg-base-100 mx-auto w-[50%] rounded-lg border-4">
+    <div className="navbar bg-base-100 mx-auto w-[50%] rounded-lg border-4 mb-10">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
       </div>
