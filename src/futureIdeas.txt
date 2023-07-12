@@ -9,3 +9,6 @@ INTEGRATE GPT API INTO CODE SOMEHOW
 
 LATER: RESTRICT FILE SIZE UPLOAD FOR SUPABASE STORAGE BUCKETS. GO TO SUPABASE TO DO THIS. ALSO
 FILE TYPE
+
+I'm thinking instead of doing a signup form allow the user to enter there data once they
+confirm there email

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import useArtworkStore from "./store/artworkStore";
+import useSignupForm from "./store/signupStore";
 
 import Navbar from "./components/ui/Navbar";
 import InputForm from "./components/ui/InputForm";
 import SignupForm from "./components/ui/SignupForm";
+import InitialSignup from "./components/ui/InitialSignup";
 
 // Things to think about later: only alloiwng certain file types.
 // Only allowing a certain amount of image bytes per user
@@ -19,6 +21,27 @@ function App() {
 
   // eslint-disable-next-line no-unused-vars
   const [images, setImages] = useState([]);
+
+  const { form } = useSignupForm();
+
+  async function magicLinkLogin(event) {
+    event.preventDefault();
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: form.email,
+    });
+
+    if (error) {
+      alert(
+        "Error communicating with supabase, make sure to use a real email address!"
+      );
+      console.log(data);
+      console.log(error);
+      return;
+    } else {
+      console.log(data);
+      alert("Check your email for a Supabase Magic Link to log in!");
+    }
+  }
 
   // CDNURL + user.id + "/" + image.name
 
@@ -58,7 +81,18 @@ function App() {
       <Navbar signOut={() => signOut()} />
       {user === null ? (
         <>
-          <SignupForm />
+          {/* <SignupForm /> */}
+          <InitialSignup magicLinkLogin={magicLinkLogin} />
+          {/* <input
+            type="text"
+            placeholder="Type here"
+            autoComplete="email"
+            className="input input-bordered input-primary w-full max-w-xs"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button className="btn btn-outline" onClick={() => magicLinkLogin()}>
+            Sign Up
+          </button> */}
         </>
       ) : (
         <>

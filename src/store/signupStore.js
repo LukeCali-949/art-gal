@@ -6,7 +6,6 @@ const useSignupForm = create((set) => ({
     username: "",
     firstName: "",
     lastName: "",
-    avatarUrl: "",
     image: "",
     imagePreviewUrl: "",
   },

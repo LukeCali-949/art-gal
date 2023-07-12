@@ -1,18 +1,18 @@
 import { v4 as uuidv4 } from "uuid";
 
 const CDNURL =
-  "https://snmvdalbzhcxwrlcsaqv.supabase.co/storage/v1/object/public/images/";
+  "https://snmvdalbzhcxwrlcsaqv.supabase.co/storage/v1/object/public";
 
-export async function uploadImage(user, file, supabase) {
+export async function uploadImage(user, file, supabase, bucket) {
   const uniqueID = uuidv4();
   const imageUrl = user.id + "/" + uniqueID;
 
   const { data, error } = await supabase.storage
-    .from("images")
+    .from(bucket)
     .upload(imageUrl, file);
 
   if (data) {
-    return `${CDNURL}${user.id}/${uniqueID}`;
+    return `${CDNURL}/${bucket}/${user.id}/${uniqueID}`;
   } else {
     console.error(error);
     return null;

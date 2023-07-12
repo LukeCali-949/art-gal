@@ -1,30 +1,34 @@
 import useSignupForm from "../../store/signupStore";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+
+//import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRef } from "react";
+import { uploadImage } from "../../supabase/supabaseFunctions";
 
 // FOR NEXT TIME:
 // MUST CREATE NEW SUPABASE STORAGE BUCKET FOR AVATARS FOR USER
 // ALSO MUST FINISHED INSERTING USER INFO IN THE PROFILES TABLE
 
+// eslint-disable-next-line react/prop-types
 const SignupForm = () => {
-  const supabase = useSupabaseClient();
+  //const supabase = useSupabaseClient();
 
   const hiddenInputRef = useRef();
 
   const { form, setForm } = useSignupForm();
+
+  //const { setUser } = useUserStore();
 
   function handleFormChange(e) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleCancel() {
+  function eraseForm() {
     setForm({
       email: "",
       username: "",
       firstName: "",
       lastName: "",
-      avatarUrl: "",
       image: "",
       imagePreviewUrl: "",
     });
@@ -55,38 +59,53 @@ const SignupForm = () => {
   }
 
   // SUPABASE FUNCTIONS
-  async function magicLinkLogin() {
-    const { user, error } = await supabase.auth.signInWithOtp({
-      email: form.email,
-    });
+  // async function magicLinkLogin(event) {
+  //   event.preventDefault();
+  //   console.log(form.email);
+  //   const { error } = await supabase.auth.signInWithOtp({
+  //     email: form.email,
+  //   });
 
-    if (error) {
-      alert(
-        "Error communicating with supabase, make sure to use a real email address!"
-      );
-      console.log(error);
-      return;
-    }
+  //   if (error) {
+  //     eraseForm();
+  //     alert(
+  //       "Error communicating with supabase, make sure to use a real email address!"
+  //     );
+  //     console.error(error);
+  //     return;
+  //   }
 
-    alert("Check your email for a Supabase Magic Link to log in!");
+  //   alert("Check your email for a Supabase Magic Link to log in!");
 
-    if (user) {
-      const { error } = await supabase.from("profiles").upsert([
-        {
-          id: user.id,
-          username: form.username,
-          full_name: form.fullName,
-          avatar_url: form.lastName,
-          email: user.email,
-          // TODO: STILL OTHER FIELDS
-        },
-      ]);
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser();
 
-      if (error) {
-        console.error("Error creating user profile:", error);
-      }
-    }
-  }
+  //   const userAvatarUrl = await uploadImage(
+  //     user,
+  //     form.image,
+  //     supabase,
+  //     "userAvatars"
+  //   );
+
+  //   if (user) {
+  //     const { error } = await supabase.from("profiles").upsert([
+  //       {
+  //         id: user.id,
+  //         username: form.username,
+  //         first_name: form.firstName,
+  //         last_name: form.lastName,
+  //         avatar_url: userAvatarUrl,
+  //         email: user.email,
+  //       },
+  //     ]);
+
+  //     if (error) {
+  //       console.error("Error creating user profile:", error);
+  //     }
+  //   }
+  //   eraseForm();
+  // }
 
   return (
     <form>
@@ -231,7 +250,7 @@ const SignupForm = () => {
           <button
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
-            onClick={handleCancel}
+            onClick={eraseForm}
           >
             Cancel
           </button>

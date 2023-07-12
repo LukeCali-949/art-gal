@@ -49,7 +49,7 @@ export default function InputForm({ user }) {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(user);
-    const imageLink = await uploadImage(user, form.image, supabase);
+    const imageLink = await uploadImage(user, form.image, supabase, "images");
     updateImageUrl(imageLink);
 
     const { data, error } = await supabase.from("artworks").insert([
