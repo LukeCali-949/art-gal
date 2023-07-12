@@ -6,3 +6,6 @@ Picture generator from an api, where the user will have the option
 to add to their gallery, and then the site will handle the upload to the database
 
 INTEGRATE GPT API INTO CODE SOMEHOW
+
+LATER: RESTRICT FILE SIZE UPLOAD FOR SUPABASE STORAGE BUCKETS. GO TO SUPABASE TO DO THIS. ALSO
+FILE TYPE
