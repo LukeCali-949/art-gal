@@ -7,6 +7,7 @@ import Navbar from "./components/ui/Navbar";
 import InputForm from "./components/ui/InputForm";
 import SignupForm from "./components/ui/SignupForm";
 import InitialSignup from "./components/ui/InitialSignup";
+import Gallery from "./components/ui/Gallery";
 
 // Things to think about later: only alloiwng certain file types.
 // Only allowing a certain amount of image bytes per user
@@ -17,10 +18,12 @@ function App() {
   const user = useUser();
   const supabase = useSupabaseClient();
 
-  const artworks = useArtworkStore((state) => state.artworks);
+  //const artworks = useArtworkStore((state) => state.artworks);
 
   // eslint-disable-next-line no-unused-vars
   const [images, setImages] = useState([]);
+
+  const [completedProfile, setCompletedProfile] = useState(false);
 
   const { form } = useSignupForm();
 
@@ -96,11 +99,22 @@ function App() {
         </>
       ) : (
         <>
-          <h1>You are signed in!</h1>
-          <p>Current user: {user.email}</p>
+          {/* <h1>You are signed in!</h1>
+          <p>Current user: {user.email}</p> */}
 
-          <InputForm user={user} />
-          <div className="form-control w-full max-w-xs">
+          <Gallery />
+          {/* <InputForm user={user} /> */}
+          {/* {!completedProfile ? (
+            <SignupForm
+              user={user}
+              userEmail={user.email}
+              setCompletedProfile={setCompletedProfile}
+            />
+          ) : (
+            <InputForm user={user} />
+          )} */}
+
+          {/* <div className="form-control w-full max-w-xs">
             {artworks.map((artwork) => {
               return (
                 <div key={artwork.image}>
@@ -108,7 +122,7 @@ function App() {
                 </div>
               );
             })}
-          </div>
+          </div> */}
         </>
       )}
     </div>

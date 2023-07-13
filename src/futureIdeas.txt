@@ -12,3 +12,7 @@ FILE TYPE
 
 I'm thinking instead of doing a signup form allow the user to enter there data once they
 confirm there email
+
+browser as guest option
+
+for gallery im thining have list then option to expand image to fill screen like modal

@@ -1,6 +1,6 @@
 import useSignupForm from "../../store/signupStore";
 
-//import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRef } from "react";
 import { uploadImage } from "../../supabase/supabaseFunctions";
 
@@ -9,8 +9,8 @@ import { uploadImage } from "../../supabase/supabaseFunctions";
 // ALSO MUST FINISHED INSERTING USER INFO IN THE PROFILES TABLE
 
 // eslint-disable-next-line react/prop-types
-const SignupForm = () => {
-  //const supabase = useSupabaseClient();
+const SignupForm = ({ setCompletedProfile, user, userEmail }) => {
+  const supabase = useSupabaseClient();
 
   const hiddenInputRef = useRef();
 
@@ -29,6 +29,7 @@ const SignupForm = () => {
       username: "",
       firstName: "",
       lastName: "",
+      avatar_url: "",
       image: "",
       imagePreviewUrl: "",
     });
@@ -56,6 +57,44 @@ const SignupForm = () => {
         imagePreviewUrl: null,
       });
     }
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(user);
+    // const imageLink = await uploadImage(
+    //   user,
+    //   form.image,
+    //   supabase,
+    //   "userAvatars"
+    // );
+    // consider form updates wiht image link here
+
+    // eslint-disable-next-line react/prop-types
+    console.log("this is user email" + user.email);
+
+    const { data, error } = await supabase.from("profiles").upsert([
+      {
+        username: form.username,
+        email: userEmail,
+        first_name: form.firstName,
+        last_name: form.lastName,
+        avatar_url:
+          "https://pnsbwinoooogtverbjtd.supabase.co/storage/v1/object/public/userAvatars/pngkey.com-classified-stamp-png-2301779.png?t=2023-07-13T22%3A27%3A46.219Z",
+      },
+    ]);
+
+    if (error) {
+      console.error("Error inserting profile: ", error);
+      eraseForm();
+      return;
+    }
+    console.log(data);
+
+    console.log("made it here");
+
+    // Clear the form
+    setCompletedProfile(true);
+    eraseForm();
   }
 
   // SUPABASE FUNCTIONS
@@ -108,7 +147,11 @@ const SignupForm = () => {
   // }
 
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
+    >
       <div className="space-y-12 bg-white mx-auto w-[50%] py-10 px-10 rounded-lg mb-10">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -175,26 +218,6 @@ const SignupForm = () => {
                   onChange={handleFormChange}
                   id="last-name"
                   autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  type="email"
-                  autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
