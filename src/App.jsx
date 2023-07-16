@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Routes, Route } from "react-router-dom";
+
 import useArtworkStore from "./store/artworkStore";
 import useSignupForm from "./store/signupStore";
 
@@ -8,6 +10,7 @@ import InputForm from "./components/ui/InputForm";
 import SignupForm from "./components/ui/SignupForm";
 import InitialSignup from "./components/ui/InitialSignup";
 import Gallery from "./components/ui/Gallery";
+import NoMatch from "./components/ui/NoMatch";
 
 // Things to think about later: only alloiwng certain file types.
 // Only allowing a certain amount of image bytes per user
@@ -22,8 +25,6 @@ function App() {
 
   // eslint-disable-next-line no-unused-vars
   const [images, setImages] = useState([]);
-
-  const [completedProfile, setCompletedProfile] = useState(false);
 
   const { form } = useSignupForm();
 
@@ -82,6 +83,7 @@ function App() {
   return (
     <div className="bg-gradient-to-r from-[#8E2DE2] to-[#4A00E0] min-h-screen">
       <Navbar signOut={() => signOut()} />
+
       {user === null ? (
         <>
           {/* <SignupForm /> */}
@@ -99,20 +101,11 @@ function App() {
         </>
       ) : (
         <>
-          {/* <h1>You are signed in!</h1>
-          <p>Current user: {user.email}</p> */}
-
-          <Gallery />
-          {/* <InputForm user={user} /> */}
-          {/* {!completedProfile ? (
-            <SignupForm
-              user={user}
-              userEmail={user.email}
-              setCompletedProfile={setCompletedProfile}
-            />
-          ) : (
-            <InputForm user={user} />
-          )} */}
+          <Routes>
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/artwork-input" element={<InputForm />} />
+            <Route path="/*" element={<NoMatch />} />
+          </Routes>
 
           {/* <div className="form-control w-full max-w-xs">
             {artworks.map((artwork) => {

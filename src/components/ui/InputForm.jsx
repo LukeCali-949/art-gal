@@ -1,5 +1,5 @@
 // import { PhotoIcon } from "@heroicons/react/24/solid";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { uploadImage } from "../../supabase/supabaseFunctions";
 import useArtworkStore from "../../store/artworkStore";
 import { useState } from "react";
@@ -12,7 +12,8 @@ import { useState } from "react";
 // ITS IMPROBABLE THAT A USER WILL UPLOAD THE SAME IMAGE TWICE, BUT AN ERROR NONETHELESS
 
 // eslint-disable-next-line react/prop-types
-export default function InputForm({ user }) {
+export default function InputForm() {
+  const user = useUser();
   const supabase = useSupabaseClient();
 
   // FOR THE DROP FILE INPUT
@@ -59,6 +60,7 @@ export default function InputForm({ user }) {
         date_of_artwork: form.dateOfArtwork,
         artistic_movement: form.artisticMovement,
         country_of_origin: form.countryOfOrigin,
+        email: user.email,
         image_url: imageLink,
       },
     ]);

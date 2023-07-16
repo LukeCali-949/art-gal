@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react/prop-types
 import { useUser } from "@supabase/auth-helpers-react";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ signOut }) => {
   const user = useUser();
@@ -9,9 +10,18 @@ const Navbar = ({ signOut }) => {
     <div className="navbar bg-base-100 mx-auto w-[50%] rounded-lg border-4 mb-10">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">{`${
-          user.email.split("@")[0]
+          !user ? "user" : user.email.split("@")[0]
         }'s Gallery`}</a>
       </div>
+      {user && (
+        <>
+          <Link to="gallery">My Gallery</Link>
+          <Link to="artwork-input" className="ml-5">
+            New Artwork From
+          </Link>
+        </>
+      )}
+
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
