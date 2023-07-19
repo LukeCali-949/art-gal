@@ -110,8 +110,8 @@ export default function InputForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="space-y-12 bg-white mx-auto w-[50%] py-10 px-10 rounded-lg">
+    <form onSubmit={handleSubmit} className="pb-10">
+      <div className="space-y-12 bg-white mx-auto w-[90%] xl:w-[50%] sm py-10 px-10 rounded-lg">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Artwork Information
@@ -275,6 +275,7 @@ export default function InputForm() {
                     id="dropzone-file"
                     type="file"
                     className="hidden"
+                    accept="image/*"
                     onChange={(e) => {
                       handleImageChange(e);
                     }}

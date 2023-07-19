@@ -25,6 +25,7 @@ function App() {
 
   // eslint-disable-next-line no-unused-vars
   const [images, setImages] = useState([]);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const { form } = useSignupForm();
 
@@ -81,8 +82,19 @@ function App() {
   }
 
   return (
-    <div className="bg-gradient-to-r from-[#8E2DE2] to-[#4A00E0] min-h-screen">
-      <Navbar signOut={() => signOut()} />
+    <div
+      className="bg-gradient-to-r from-[#8E2DE2] to-[#4A00E0] min-h-screen"
+      onClick={() => {
+        if (isMenuOpen) {
+          setMenuOpen(false);
+        }
+      }}
+    >
+      <Navbar
+        signOut={() => signOut()}
+        isMenuOpen={isMenuOpen}
+        setMenuOpen={setMenuOpen}
+      />
 
       {user === null ? (
         <>
@@ -104,6 +116,7 @@ function App() {
           <Routes>
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/artwork-input" element={<InputForm />} />
+            {/* <Route path="/profile" element={<SignupForm />} /> */}
             <Route path="/*" element={<NoMatch />} />
           </Routes>
 

@@ -1,7 +1,7 @@
 import useSignupForm from "../../store/signupStore";
 
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useRef } from "react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useRef, useEffect } from "react";
 import { uploadImage } from "../../supabase/supabaseFunctions";
 
 // FOR NEXT TIME:
@@ -9,8 +9,9 @@ import { uploadImage } from "../../supabase/supabaseFunctions";
 // ALSO MUST FINISHED INSERTING USER INFO IN THE PROFILES TABLE
 
 // eslint-disable-next-line react/prop-types
-const SignupForm = ({ setCompletedProfile, user, userEmail }) => {
+const SignupForm = () => {
   const supabase = useSupabaseClient();
+  const user = useUser();
 
   const hiddenInputRef = useRef();
 
@@ -75,11 +76,10 @@ const SignupForm = ({ setCompletedProfile, user, userEmail }) => {
     const { data, error } = await supabase.from("profiles").upsert([
       {
         username: form.username,
-        email: userEmail,
+        email: user.email,
         first_name: form.firstName,
         last_name: form.lastName,
-        avatar_url:
-          "https://pnsbwinoooogtverbjtd.supabase.co/storage/v1/object/public/userAvatars/pngkey.com-classified-stamp-png-2301779.png?t=2023-07-13T22%3A27%3A46.219Z",
+        avatar_url: form.imagePreviewUrl,
       },
     ]);
 
@@ -93,58 +93,9 @@ const SignupForm = ({ setCompletedProfile, user, userEmail }) => {
     console.log("made it here");
 
     // Clear the form
-    setCompletedProfile(true);
+
     eraseForm();
   }
-
-  // SUPABASE FUNCTIONS
-  // async function magicLinkLogin(event) {
-  //   event.preventDefault();
-  //   console.log(form.email);
-  //   const { error } = await supabase.auth.signInWithOtp({
-  //     email: form.email,
-  //   });
-
-  //   if (error) {
-  //     eraseForm();
-  //     alert(
-  //       "Error communicating with supabase, make sure to use a real email address!"
-  //     );
-  //     console.error(error);
-  //     return;
-  //   }
-
-  //   alert("Check your email for a Supabase Magic Link to log in!");
-
-  //   const {
-  //     data: { user },
-  //   } = await supabase.auth.getUser();
-
-  //   const userAvatarUrl = await uploadImage(
-  //     user,
-  //     form.image,
-  //     supabase,
-  //     "userAvatars"
-  //   );
-
-  //   if (user) {
-  //     const { error } = await supabase.from("profiles").upsert([
-  //       {
-  //         id: user.id,
-  //         username: form.username,
-  //         first_name: form.firstName,
-  //         last_name: form.lastName,
-  //         avatar_url: userAvatarUrl,
-  //         email: user.email,
-  //       },
-  //     ]);
-
-  //     if (error) {
-  //       console.error("Error creating user profile:", error);
-  //     }
-  //   }
-  //   eraseForm();
-  // }
 
   return (
     <form

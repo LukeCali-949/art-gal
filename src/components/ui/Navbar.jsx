@@ -1,84 +1,96 @@
 /* eslint-disable react/prop-types */
-// eslint-disable-next-line react/prop-types
-import { useUser } from "@supabase/auth-helpers-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "@supabase/auth-helpers-react";
 
-const Navbar = ({ signOut }) => {
+const Navbar = ({ signOut, isMenuOpen, setMenuOpen }) => {
   const user = useUser();
 
   return (
-    <div className="navbar bg-base-100 mx-auto w-[50%] rounded-lg border-4 mb-10">
+    <div className="navbar bg-base-100 mx-auto w-full md:w-1/2 rounded-lg border-4 mb-10">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">{`${
           !user ? "user" : user.email.split("@")[0]
-        }'s Gallery`}</a>
+        }'s Art Page`}</a>
       </div>
-      {user && (
-        <>
-          <Link to="gallery">My Gallery</Link>
-          <Link to="artwork-input" className="ml-5">
-            New Artwork From
-          </Link>
-        </>
-      )}
 
-      <div className="flex-none">
+      <div className="block xl:hidden">
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              <span className="badge badge-sm indicator-item">8</span>
-            </div>
-          </label>
-          <div
+          <label
+            onClick={() => setMenuOpen(!isMenuOpen)}
             tabIndex={0}
-            className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+            className="btn m-1"
           >
-            <div className="card-body">
-              <span className="font-bold text-lg">8 Items</span>
-              <span className="text-info">Subtotal: $999</span>
-              <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://talksport.com/wp-content/uploads/sites/5/2023/03/Screenshot-2023-03-21-161254.png" />
-            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${
+              isMenuOpen ? "" : "hidden"
+            }`}
           >
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              <Link to="gallery">My Gallery</Link>
             </li>
             <li>
-              <a>Settings</a>
+              <Link to="artwork-input">New Artwork Form</Link>
+            </li>
+            <li>
+              <Link to="settings">Settings</Link>
             </li>
             <li>
               <a onClick={() => signOut()}>Logout</a>
             </li>
           </ul>
+        </div>
+      </div>
+
+      <div className={`xl:flex hidden`}>
+        {user && (
+          <div className="flex flex-col xl:flex-row">
+            <Link to="gallery" className="mb-2 xl:mb-0 xl:mr-5">
+              My Gallery
+            </Link>
+            <Link className="mb-2 xl:mb-0 xl:mr-5" to="artwork-input">
+              New Artwork Form
+            </Link>
+          </div>
+        )}
+
+        <div className="flex-none">
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img
+                  src={`https://images.rawpixel.com/image_png_social_square/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png`}
+                />
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link to="settings">Settings</Link>
+              </li>
+              <li>
+                <a onClick={() => signOut()}>Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
