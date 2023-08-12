@@ -186,18 +186,20 @@ const Gallery = () => {
                   />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{artwork.artwork_name}</h2>
-                  <h2 className="text-sm">
+                  <h2 className="card-title text-black">
+                    {artwork.artwork_name}
+                  </h2>
+                  <h2 className="text-sm text-black">
                     {artwork.artist_name ? (
                       <>
-                        <span className="font-bold">Author: </span>
+                        <span className="font-bold text-black">Author: </span>
                         {artwork.artist_name}
                       </>
                     ) : (
                       ""
                     )}
                   </h2>
-                  <h2 className="text-sm">
+                  <h2 className="text-sm text-black">
                     {artwork.date_of_artwork ? (
                       <>
                         <span className="font-bold">Date: </span>
@@ -207,7 +209,7 @@ const Gallery = () => {
                       ""
                     )}
                   </h2>
-                  <h2 className="text-sm">
+                  <h2 className="text-sm text-black">
                     {artwork.country_of_origin ? (
                       <>
                         <span className="font-bold">Country Of Origin: </span>
@@ -217,7 +219,7 @@ const Gallery = () => {
                       ""
                     )}
                   </h2>
-                  <h2 className="text-sm">
+                  <h2 className="text-sm text-black">
                     {artwork.artistic_movement ? (
                       <>
                         <span className="font-bold">Artistic Movement: </span>
