@@ -43,14 +43,20 @@ const Navbar = ({ signOut, isMenuOpen, setMenuOpen }) => {
             }`}
           >
             <li>
-              <Link to="gallery">My Gallery</Link>
+              <Link className="text-black" to="gallery">
+                My Gallery
+              </Link>
             </li>
             <li>
-              <Link to="artwork-input">New Artwork Form</Link>
+              <Link className="text-black" to="artwork-input">
+                New Artwork Form
+              </Link>
             </li>
 
             <li>
-              <a onClick={() => signOut()}>Logout</a>
+              <a className="text-black" onClick={() => signOut()}>
+                Logout
+              </a>
             </li>
           </ul>
         </div>

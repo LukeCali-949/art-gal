@@ -114,7 +114,7 @@ const Gallery = () => {
     <div className="pb-5">
       <div className="inline-flex mobile:text-[10px] xl:text-[20px] gap-3  bg-white ml-[8%] rounded-lg p-3 font-sans font-semibold">
         <div className="flex mobile:my-auto mobile:text-[13px] gap-1">
-          <label>Sort: </label>
+          <label className="text-black">Sort: </label>
           <select
             className="mobile:text-[10px] mobile:w-1 mobile:h-1 xl:text-[20px] rounded-md mobile:my-auto"
             onChange={(e) => setSortOrder(e.target.value)}
@@ -138,7 +138,7 @@ const Gallery = () => {
         </div>
 
         <div className="flex mobile:my-auto mobile:text-[13px] gap-1 ">
-          <label>Country: </label>
+          <label className="text-black">Country: </label>
           <select
             className="mobile:text-[10px] mobile:w-1 mobile:h-1 xl:text-[20px] rounded-md mobile:my-auto"
             onChange={(e) => setCountryFilter(e.target.value)}
@@ -161,7 +161,7 @@ const Gallery = () => {
         </div>
 
         <div className="mobile:text-[13px]  flex mobile:my-auto gap-1">
-          <label>Search: </label>
+          <label className="text-black">Search: </label>
           <input
             className="mobile:h-[18px] mobile:w-[60px] md:w-[130px] rounded-md mobile:text-[13px]"
             type="text"
@@ -174,7 +174,7 @@ const Gallery = () => {
           return (
             <>
               <div
-                className="card min-w-[350px] max-w-[350px] h-[27rem] bg-base-100 shadow-xl ml-10"
+                className="card  min-w-[350px] max-w-[350px] h-[27rem] bg-white shadow-xl ml-10"
                 key={artwork.id}
               >
                 <figure>
