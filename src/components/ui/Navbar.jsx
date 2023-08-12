@@ -9,7 +9,7 @@ const Navbar = ({ signOut, isMenuOpen, setMenuOpen }) => {
   return (
     <div className="navbar bg-white mx-auto w-full md:w-1/2 rounded-lg border-4 mb-10">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">{`${
+        <a className="btn btn-ghost normal-case text-xl text-black">{`${
           !user ? "user" : user.email.split("@")[0]
         }'s Art Gal`}</a>
       </div>

@@ -98,7 +98,7 @@ function App() {
           <div className="h-5"></div>
           <div className="h-20 flex bg-white sm:mx-[25%] mx-[10%] mb-5 rounded-lg gap-3">
             <img src={Palette} className="h-12 my-auto ml-5" />
-            <h1 className="sm:text-2xl text-xl my-auto font-bold">
+            <h1 className="sm:text-2xl text-black text-xl my-auto font-bold">
               Welcome to ArtGal!
             </h1>
           </div>
