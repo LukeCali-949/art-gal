@@ -9,6 +9,7 @@ export default {
       mobile: "350px",
       xl: "1280px",
       md: "960px",
+      sm: "600px",
       // => @media (min-width: 640px) { ... }
     },
   },

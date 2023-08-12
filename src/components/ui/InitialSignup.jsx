@@ -17,7 +17,7 @@ const InitialSignup = ({ magicLinkLogin }) => {
 
   return (
     <form onSubmit={magicLinkLogin}>
-      <div className="space-y-12 bg-white mx-auto w-[50%] py-10 px-10 rounded-lg mb-10">
+      <div className="space-y-12  bg-white mx-auto sm:w-[50%] w-[80%] py-10 px-10 rounded-lg mb-10">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Confirm Email

@@ -59,7 +59,7 @@ export default function InputForm() {
         artwork_name: form.artworkName,
         date_of_artwork: form.dateOfArtwork,
         artistic_movement: form.artisticMovement,
-        country_of_origin: form.countryOfOrigin,
+        country_of_origin: toTitleCase(form.countryOfOrigin),
         email: user.email,
         image_url: imageLink,
       },
@@ -303,4 +303,10 @@ export default function InputForm() {
       </div>
     </form>
   );
+}
+
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }

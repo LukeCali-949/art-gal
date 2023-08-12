@@ -188,22 +188,44 @@ const Gallery = () => {
                 <div className="card-body">
                   <h2 className="card-title">{artwork.artwork_name}</h2>
                   <h2 className="text-sm">
-                    Author: {artwork.artist_name ? artwork.artist_name : ""}
+                    {artwork.artist_name ? (
+                      <>
+                        <span className="font-bold">Author: </span>
+                        {artwork.artist_name}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </h2>
                   <h2 className="text-sm">
-                    {artwork.date_of_artwork
-                      ? `Date: ${artwork.date_of_artwork}`
-                      : ""}
+                    {artwork.date_of_artwork ? (
+                      <>
+                        <span className="font-bold">Date: </span>
+                        {artwork.date_of_artwork}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </h2>
                   <h2 className="text-sm">
-                    {artwork.country_of_origin
-                      ? `Country Of Origin: ${artwork.country_of_origin}`
-                      : ""}
+                    {artwork.country_of_origin ? (
+                      <>
+                        <span className="font-bold">Country Of Origin: </span>
+                        {artwork.country_of_origin}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </h2>
                   <h2 className="text-sm">
-                    {artwork.artistic_movement
-                      ? `Artistic Movement: ${artwork.artistic_movement}`
-                      : ""}
+                    {artwork.artistic_movement ? (
+                      <>
+                        <span className="font-bold">Artistic Movement: </span>
+                        {artwork.artistic_movement}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </h2>
 
                   <div className="card-actions justify-end">

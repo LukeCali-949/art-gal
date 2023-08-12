@@ -1,8 +1,8 @@
 import useSignupForm from "../../store/signupStore";
 
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useRef, useEffect } from "react";
-import { uploadImage } from "../../supabase/supabaseFunctions";
+import { useRef } from "react";
+//import { uploadImage } from "../../supabase/supabaseFunctions";
 
 // FOR NEXT TIME:
 // MUST CREATE NEW SUPABASE STORAGE BUCKET FOR AVATARS FOR USER

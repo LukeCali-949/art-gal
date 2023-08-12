@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Routes, Route } from "react-router-dom";
 
-import useArtworkStore from "./store/artworkStore";
+import Palette from "./assets/palette.png";
+
+//import useArtworkStore from "./store/artworkStore";
 import useSignupForm from "./store/signupStore";
 
 import Navbar from "./components/ui/Navbar";
 import InputForm from "./components/ui/InputForm";
-import SignupForm from "./components/ui/SignupForm";
+//import SignupForm from "./components/ui/SignupForm";
 import InitialSignup from "./components/ui/InitialSignup";
 import Gallery from "./components/ui/Gallery";
-import NoMatch from "./components/ui/NoMatch";
+//import NoMatch from "./components/ui/NoMatch";
 
 // Things to think about later: only alloiwng certain file types.
 // Only allowing a certain amount of image bytes per user
@@ -90,15 +92,16 @@ function App() {
         }
       }}
     >
-      <Navbar
-        signOut={() => signOut()}
-        isMenuOpen={isMenuOpen}
-        setMenuOpen={setMenuOpen}
-      />
-
       {user === null ? (
         <>
           {/* <SignupForm /> */}
+          <div className="h-5"></div>
+          <div className="h-20 flex bg-white sm:mx-[25%] mx-[10%] mb-5 rounded-lg gap-3">
+            <img src={Palette} className="h-12 my-auto ml-5" />
+            <h1 className="sm:text-2xl text-xl my-auto font-bold">
+              Welcome to ArtGal!
+            </h1>
+          </div>
           <InitialSignup magicLinkLogin={magicLinkLogin} />
           {/* <input
             type="text"
@@ -113,11 +116,16 @@ function App() {
         </>
       ) : (
         <>
+          <Navbar
+            signOut={() => signOut()}
+            isMenuOpen={isMenuOpen}
+            setMenuOpen={setMenuOpen}
+          />
           <Routes>
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/artwork-input" element={<InputForm />} />
             {/* <Route path="/profile" element={<SignupForm />} /> */}
-            <Route path="/*" element={<NoMatch />} />
+            <Route path="/*" element={<Gallery />} />
           </Routes>
 
           {/* <div className="form-control w-full max-w-xs">

@@ -35,7 +35,7 @@ export async function getImages(user, supabase) {
     return null;
   }
 }
-// Cooper/
+
 // data: [ image1, image2, image3 ]
 // image1: { name: "subscribeToCooperCodes.png" }
 
