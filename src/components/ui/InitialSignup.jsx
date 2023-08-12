@@ -23,7 +23,7 @@ const InitialSignup = ({ magicLinkLogin }) => {
             Confirm Email
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            Please provide your email so you can begin using ImageGal!
+            Please provide your email so you can begin using ArtGal!
           </p>
 
           <div className="sm:col-span-4 mt-5">
